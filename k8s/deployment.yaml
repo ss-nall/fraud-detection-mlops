@@ -30,7 +30,7 @@ spec:
 
       - name: fraud-api
 
-        image: ssnall/fraud-mlops:1.1
+        image: ssnall/fraud-mlops::latest
 
         imagePullPolicy: Always
 
