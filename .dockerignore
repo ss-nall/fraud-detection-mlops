@@ -1,0 +1,11 @@
+venv/
+.git/
+.vscode/
+.idea/
+
+__pycache__/
+*.pyc
+
+data/external/
+
+.ipynb_checkpoints/

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: fraud-api
+
+  namespace: fraud-mlops
+
+spec:
+
+  replicas: 2
+
+  selector:
+
+    matchLabels:
+
+      app: fraud-api
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: fraud-api
+
+    spec:
+
+      containers:
+
+      - name: fraud-api
+
+        image: ssnall/fraud-mlops:1.1
+
+        imagePullPolicy: Always
+
+        ports:
+
+        - containerPort: 8000
