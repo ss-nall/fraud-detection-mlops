@@ -10,6 +10,13 @@ from fastapi import (
     HTTPException
 )
 
+from fastapi.responses import Response
+
+from prometheus_client import (
+    Counter,
+    generate_latest
+)
+
 from src.serving.inference import (
     run_inference
 )
@@ -23,11 +30,24 @@ from src.api.schemas import (
 router = APIRouter()
 
 
+prediction_counter = Counter(
+    "fraud_predictions_total",
+    "Total fraud prediction requests"
+)
+
+health_counter = Counter(
+    "health_checks_total",
+    "Total health check requests"
+)
+
+
 @router.get(
     "/health",
     response_model=HealthResponse
 )
 def health_check():
+
+    health_counter.inc()
 
     return {
         "status": "healthy"
@@ -43,6 +63,8 @@ async def predict_file(
     file: UploadFile = File(...)
 
 ):
+
+    prediction_counter.inc()
 
     if not (
 
@@ -115,3 +137,15 @@ async def predict_file(
             detail=str(e)
 
         )
+
+
+@router.get("/metrics")
+def metrics():
+
+    return Response(
+
+        content=generate_latest(),
+
+        media_type="text/plain"
+
+    )
