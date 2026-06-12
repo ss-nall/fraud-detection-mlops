@@ -36,8 +36,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ss-nall/fraud-mlops:latest
-            ss-nall/fraud-mlops:${{ github.sha }}
+            ssnall/fraud-mlops:latest
+            ssnall/fraud-mlops:${{ github.sha }}
 
       - name: Verify Image
         run: |
